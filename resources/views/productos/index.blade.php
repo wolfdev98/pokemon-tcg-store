@@ -7,36 +7,60 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <a href="{{ route('productos.create') }}" style="background-color: #3b82f6; color: white; padding: 8px 16px; border-radius: 6px; text-decoration: none;">Agregar Producto</a>
-            <table class="mt-4 w-full border">
-                <thead>
-                    <tr class="bg-gray-100">
-                        <th class="border px-4 py-2">ID</th> <th class="border px-4 py-2">Nombre</th>
-                        <th class="border px-4 py-2">Categoría</th>
-                        <th class="border px-4 py-2">Precio</th>
-                        <th class="border px-4 py-2">Stock</th>
-                        <th class="border px-4 py-2">Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($productos as $producto)
-                    <tr>
-                        <td class="border px-4 py-2">{{ $producto->id }}</td> <td class="border px-4 py-2">{{ $producto->nombre }}</td>
-                        <td class="border px-4 py-2">{{ $producto->categoria }}</td>
-                        <td class="border px-4 py-2">${{ $producto->precio }}</td>
-                        <td class="border px-4 py-2">{{ $producto->stock }}</td>
-                        <td class="border px-4 py-2">
-                            <a href="{{ route('productos.edit', $producto) }}" style="background-color: #eab308; color: white; padding: 4px 8px; border-radius: 4px; text-decoration: none;">Editar</a>
-                            <form action="{{ route('productos.destroy', $producto) }}" method="POST" class="inline">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" style="background-color: #ef4444; color: white; padding: 4px 8px; border-radius: 4px; border: none; cursor: pointer;">Eliminar</button>
-                            </form>
-                        </td>
-                    </tr>
-                    @endforeach
-                </tbody>
-            </table>
+
+            @if (auth()->user()->isAdmin())
+                <div class="mb-6">
+                    <a href="{{ route('productos.create') }}" class="inline-flex items-center gap-2 bg-slate-800 hover:bg-slate-900 text-white px-5 py-2.5 rounded-xl font-medium shadow-sm transition">
+                        <span class="text-lg leading-none">+</span> Agregar Producto
+                    </a>
+                </div>
+            @endif
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                @foreach ($productos as $producto)
+                    <div class="group relative bg-white rounded-2xl border border-gray-200 overflow-hidden flex flex-col transition duration-200 hover:-translate-y-1 hover:shadow-xl">
+
+                        {{-- Imagen --}}
+                        <div class="relative h-52 bg-gradient-to-br from-slate-50 to-gray-100 flex items-center justify-center p-4 overflow-hidden">
+                            <span class="absolute top-3 left-3 z-10 bg-amber-400 text-slate-900 text-xs font-bold px-2.5 py-1 rounded-full shadow-sm">
+                                {{ $producto->categoria }}
+                            </span>
+                            @if ($producto->imagen)
+                                <img src="{{ asset('storage/' . $producto->imagen) }}" alt="{{ $producto->nombre }}" class="h-full w-full object-contain transition duration-200 group-hover:scale-105">
+                            @else
+                                <span class="text-gray-400 text-sm">Sin imagen</span>
+                            @endif
+                        </div>
+
+                        {{-- Contenido --}}
+                        <div class="p-5 flex flex-col flex-1">
+                            <h3 class="font-bold text-gray-900 leading-snug">{{ $producto->nombre }}</h3>
+
+                            <div class="mt-auto pt-4 flex items-end justify-between">
+                                <p class="text-2xl font-extrabold text-slate-900">
+                                    ${{ number_format($producto->precio, 2) }}
+                                </p>
+                                <span class="text-xs font-semibold px-2.5 py-1 rounded-full {{ $producto->stock > 0 ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-600' }}">
+                                    {{ $producto->stock > 0 ? $producto->stock . ' en stock' : 'Agotado' }}
+                                </span>
+                            </div>
+
+                            @if (auth()->user()->isAdmin())
+                                <div class="mt-4 flex gap-2 pt-4 border-t border-gray-100">
+                                    <a href="{{ route('productos.edit', $producto) }}" class="flex-1 text-center bg-amber-400 hover:bg-amber-500 text-slate-900 text-sm font-medium px-3 py-2 rounded-lg transition">Editar</a>
+                                    <form action="{{ route('productos.destroy', $producto) }}" method="POST" class="flex-1">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="w-full bg-red-500 hover:bg-red-600 text-white text-sm font-medium px-3 py-2 rounded-lg transition">Eliminar</button>
+                                    </form>
+                                </div>
+                            @endif
+                        </div>
+
+                    </div>
+                @endforeach
+            </div>
+
         </div>
     </div>
 </x-app-layout>

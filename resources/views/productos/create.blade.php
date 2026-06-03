@@ -7,7 +7,7 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <form action="{{ route('productos.store') }}" method="POST">
+            <form action="{{ route('productos.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="mb-4">
                     <label class="block">Nombre</label>
@@ -28,11 +28,14 @@
                 <div class="mb-4">
                     <label class="block">Categoría</label>
                     <select name="categoria" class="border w-full px-3 py-2 rounded">
-                        <option value="ETB">ETB</option>
-                        <option value="Bundle">Bundle</option>
-                        <option value="Booster">Booster</option>
-                        <option value="Accesorio">Accesorio</option>
+                        <option value="Accesorios">Accesorios</option>
+                        <option value="Producto Sellado">Producto Sellado</option>
+                        <option value="Cartas">Cartas</option>
                     </select>
+                </div>
+                <div class="mb-4">
+                    <label class="block">Imagen</label>
+                    <input type="file" name="imagen" accept="image/*" class="border w-full px-3 py-2 rounded">
                 </div>
                 <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Guardar</button>
                 <a href="{{ route('productos.index') }}" class="ml-2">Cancelar</a>

@@ -20,7 +20,16 @@
         Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     });
 
-    require __DIR__.'/auth.php';
-    Route::resource('productos', ProductoController::class)->middleware('auth');
-    Route::resource('clientes', ClienteController::class)->middleware('auth');
-    Route::resource('pedidos', PedidoController::class)->middleware('auth');
+require __DIR__.'/auth.php';
+
+// Cualquier usuario logueado puede VER la lista de productos
+Route::get('/productos', [ProductoController::class, 'index'])
+    ->middleware('auth')
+    ->name('productos.index');
+
+// Solo el ADMIN puede crear/editar/borrar productos y manejar clientes y pedidos
+Route::middleware(['auth', 'admin'])->group(function () {
+    Route::resource('productos', ProductoController::class)->except(['index', 'show']);
+    Route::resource('clientes', ClienteController::class);
+    Route::resource('pedidos', PedidoController::class);
+});
