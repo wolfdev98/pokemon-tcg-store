@@ -28,6 +28,14 @@
                         <x-nav-link :href="route('pedidos.index')" :active="request()->routeIs('pedidos.*')">
                             {{ __('Pedidos') }}
                         </x-nav-link>
+
+                        <x-nav-link :href="route('ventas.index')" :active="request()->routeIs('ventas.*')">
+                            {{ __('Ventas') }}
+                        </x-nav-link>
+                    @else
+                        <x-nav-link :href="route('carrito.index')" :active="request()->routeIs('carrito.*')">
+                            {{ __('Carrito') }}
+                        </x-nav-link>
                     @endif
                 </div>
             </div>

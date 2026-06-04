@@ -12,11 +12,19 @@
                 @method('PATCH')
                 <div class="mb-4">
                     <label class="block">Cliente</label>
-                    <input type="text" name="cliente" value="{{ $pedido->cliente }}" class="border w-full px-3 py-2 rounded">
+                    <select name="cliente_id" class="border w-full px-3 py-2 rounded">
+                        @foreach ($clientes as $cliente)
+                            <option value="{{ $cliente->id }}" {{ $pedido->cliente_id == $cliente->id ? 'selected' : '' }}>{{ $cliente->nombre }} {{ $cliente->apellido }}</option>
+                        @endforeach
+                    </select>
                 </div>
                 <div class="mb-4">
                     <label class="block">Producto</label>
-                    <input type="text" name="producto" value="{{ $pedido->producto }}" class="border w-full px-3 py-2 rounded">
+                    <select name="producto_id" class="border w-full px-3 py-2 rounded">
+                        @foreach ($productos as $producto)
+                            <option value="{{ $producto->id }}" {{ $pedido->producto_id == $producto->id ? 'selected' : '' }}>{{ $producto->nombre }}</option>
+                        @endforeach
+                    </select>
                 </div>
                 <div class="mb-4">
                     <label class="block">Cantidad</label>

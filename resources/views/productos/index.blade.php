@@ -20,7 +20,6 @@
                 @foreach ($productos as $producto)
                     <div class="group relative bg-white rounded-2xl border border-gray-200 overflow-hidden flex flex-col transition duration-200 hover:-translate-y-1 hover:shadow-xl">
 
-                        {{-- Imagen --}}
                         <div class="relative h-52 bg-gradient-to-br from-slate-50 to-gray-100 flex items-center justify-center p-4 overflow-hidden">
                             <span class="absolute top-3 left-3 z-10 bg-amber-400 text-slate-900 text-xs font-bold px-2.5 py-1 rounded-full shadow-sm">
                                 {{ $producto->categoria }}
@@ -32,7 +31,6 @@
                             @endif
                         </div>
 
-                        {{-- Contenido --}}
                         <div class="p-5 flex flex-col flex-1">
                             <h3 class="font-bold text-gray-900 leading-snug">{{ $producto->nombre }}</h3>
 
@@ -54,6 +52,13 @@
                                         <button type="submit" class="w-full bg-red-500 hover:bg-red-600 text-white text-sm font-medium px-3 py-2 rounded-lg transition">Eliminar</button>
                                     </form>
                                 </div>
+                            @else
+                                <form action="{{ route('carrito.agregar', $producto) }}" method="POST" class="mt-4 pt-4 border-t border-gray-100">
+                                    @csrf
+                                    <button type="submit" class="w-full bg-amber-400 hover:bg-amber-500 text-slate-900 text-sm font-semibold px-3 py-2 rounded-lg transition">
+                                        Agregar al carrito
+                                    </button>
+                                </form>
                             @endif
                         </div>
 

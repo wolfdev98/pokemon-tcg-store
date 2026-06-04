@@ -21,8 +21,8 @@
                 <tbody>
                     @foreach($pedidos as $pedido)
                     <tr>
-                        <td class="border px-4 py-2">{{ $pedido->cliente }}</td>
-                        <td class="border px-4 py-2">{{ $pedido->producto }}</td>
+                        <td class="border px-4 py-2">{{ $pedido->cliente?->nombre ?? 'Sin cliente' }} {{ $pedido->cliente?->apellido }}</td>
+                        <td class="border px-4 py-2">{{ $pedido->producto?->nombre ?? 'Sin producto' }}</td>
                         <td class="border px-4 py-2">{{ $pedido->cantidad }}</td>
                         <td class="border px-4 py-2">{{ $pedido->estado }}</td>
                         <td class="border px-4 py-2">

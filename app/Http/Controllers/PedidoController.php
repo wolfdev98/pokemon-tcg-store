@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Pedido;
+use App\Models\Cliente;
+use App\Models\Producto;
 use Illuminate\Http\Request;
 
 class PedidoController extends Controller
@@ -17,7 +19,9 @@ class PedidoController extends Controller
     // Muestra el formulario para crear un pedido
     public function create()
     {
-        return view('pedidos.create');
+        $clientes = Cliente::all();
+        $productos = Producto::all();
+        return view('pedidos.create', compact('clientes', 'productos'));
     }
 
     // Guarda el pedido nuevo en la base de datos
@@ -30,7 +34,9 @@ class PedidoController extends Controller
     // Muestra el formulario para editar un pedido
     public function edit(Pedido $pedido)
     {
-        return view('pedidos.edit', compact('pedido'));
+        $clientes = Cliente::all();
+        $productos = Producto::all();
+        return view('pedidos.edit', compact('pedido', 'clientes', 'productos'));
     }
 
     // Actualiza el pedido en la base de datos
