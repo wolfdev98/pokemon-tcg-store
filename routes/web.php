@@ -35,6 +35,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/carrito/agregar/{producto}', [CarritoController::class, 'agregar'])->name('carrito.agregar');
     Route::delete('/carrito/eliminar/{id}', [CarritoController::class, 'eliminar'])->name('carrito.eliminar');
     Route::post('/carrito/vaciar', [CarritoController::class, 'vaciar'])->name('carrito.vaciar');
+    Route::patch('/carrito/actualizar/{id}', [CarritoController::class, 'actualizar'])->name('carrito.actualizar');
     Route::get('/checkout', [CarritoController::class, 'checkout'])->name('checkout');
     Route::post('/checkout/confirmar', [CarritoController::class, 'confirmar'])->name('checkout.confirmar');
 });

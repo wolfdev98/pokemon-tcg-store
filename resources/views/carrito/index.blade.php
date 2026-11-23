@@ -8,6 +8,12 @@
     <div class="py-12">
         <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
 
+            @if (session('error'))
+                <div class="mb-4 p-4 bg-red-100 border border-red-300 text-red-700 rounded">
+                    {{ session('error') }}
+                </div>
+            @endif
+
             @if (count($carrito) > 0)
                 <div class="bg-white rounded-lg shadow-sm overflow-hidden">
                     @php $total = 0; @endphp
@@ -21,7 +27,14 @@
                             </div>
                             <div class="flex-1">
                                 <p class="font-semibold text-gray-800">{{ $item['nombre'] }}</p>
-                                <p class="text-sm text-gray-500">Cantidad: {{ $item['cantidad'] }} × ${{ number_format($item['precio'], 2) }}</p>
+                                <form action="{{ route('carrito.actualizar', $id) }}" method="POST" class="flex items-center gap-2 mt-1">
+    @csrf
+    @method('PATCH')
+    <label class="text-sm text-gray-500">Cantidad:</label>
+    <input type="number" name="cantidad" value="{{ $item['cantidad'] }}" min="1" class="w-20 border rounded px-2 py-1 text-sm">
+    <button type="submit" class="text-blue-600 text-sm hover:underline">Actualizar</button>
+    <span class="text-sm text-gray-500">× ${{ number_format($item['precio'], 2) }}</span>
+</form>
                             </div>
                             <p class="font-bold text-gray-900">${{ number_format($subtotal, 2) }}</p>
                             <form action="{{ route('carrito.eliminar', $id) }}" method="POST">

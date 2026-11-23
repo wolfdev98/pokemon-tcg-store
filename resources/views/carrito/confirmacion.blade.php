@@ -14,6 +14,14 @@
 
                 <div class="bg-gray-50 rounded-lg p-4 text-left text-sm mb-6">
                     <div class="flex justify-between py-1">
+                        <span class="text-gray-500">Folio</span>
+                        <span class="font-bold text-gray-800">VTA-{{ str_pad($venta->id, 5, '0', STR_PAD_LEFT) }}</span>
+                    </div>
+                    <div class="flex justify-between py-1">
+                        <span class="text-gray-500">Fecha</span>
+                        <span class="font-medium text-gray-800">{{ $venta->created_at->format('d/m/Y H:i') }}</span>
+                    </div>
+                    <div class="flex justify-between py-1">
                         <span class="text-gray-500">Método de pago</span>
                         <span class="font-medium text-gray-800">{{ $metodo }}</span>
                     </div>
