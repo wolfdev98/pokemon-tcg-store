@@ -9,7 +9,7 @@ use App\Http\Controllers\CarritoController;
 use App\Http\Controllers\VentaController;
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('login');
 });
 
 Route::get('/dashboard', function () {
